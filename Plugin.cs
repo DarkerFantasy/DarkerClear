@@ -114,10 +114,7 @@ namespace DarkerClear
                         }
                     }
                 }
-                foreach (var p in Provider.clients)
-                {
-                    ChatManager.serverSendMessage("Было удалено " + count + " машин!", Color.green, null, p, EChatMode.LOCAL, Configuration.Instance.Icone);
-                }
+                ChatManager.serverSendMessage("Было удалено " + count + " машин!", Color.green, null, null, EChatMode.GLOBAL, Configuration.Instance.Icone);
                 Console.WriteLine("Было удалено " + count + " машин!");
             }
             if (item)
@@ -127,8 +124,6 @@ namespace DarkerClear
                 {
                     ChatManager.serverSendMessage("Все предметы были удалены!", Color.green, null, p, EChatMode.LOCAL, Configuration.Instance.Icone);
                 }
-                LastClear = DateTime.Now;
-                Said = false;
             }
         }
 
