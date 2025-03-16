@@ -1,6 +1,6 @@
 # DarkerClear
 DarkerClear for Cubwork
-Commands:
+\nCommands:
 /clear i            - Clear items on map
 /clear v            - Clear vehicles on map
 /clear              - Clear vehicles and items on map
