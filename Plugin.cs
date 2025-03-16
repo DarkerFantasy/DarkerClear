@@ -25,13 +25,9 @@ namespace DarkerClear
             Rocket.Core.Logging.Logger.Log("#####  ##  ## ##  ## ##  ## ##### ##  ##");
         }
 
-        [RocketCommand("dv", "")]
-        public void DeleteVehicle(IRocketPlayer caller, string[] command)
+        [RocketCommand("dv", "Команда для очистки на машину которую смотрит игрок/в радиусе",AllowedCaller:AllowedCaller.Player)]
+        public void Comand_Dv(IRocketPlayer caller, string[] command)
         {
-            if (caller is ConsolePlayer)
-            {
-                return;
-            }
             UnturnedPlayer player = (UnturnedPlayer)caller;
             if (command.Length < 1)
             {
@@ -96,15 +92,8 @@ namespace DarkerClear
                     !pz.isInsideSafezone && !pz.anySeatsOccupied).ToList();
                 foreach (var v in array)     //Поиск в машинах
                 {
-                    try
-                    {
-                        VehicleManager.askVehicleDestroy(v);
-                        count++;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Error in DarkerClear.ClearMap:\n" + e);
-                    }
+                    VehicleManager.askVehicleDestroy(v);
+                    count++;
                 }
                 ChatManager.serverSendMessage("Было удалено " + count + " машин!", Color.green, null, null, EChatMode.GLOBAL);
                 Console.WriteLine("Было удалено " + count + " машин!");
