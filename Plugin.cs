@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Rocket.API;
+using Rocket.Core.Commands;
+using Rocket.Core.Plugins;
+using Rocket.Unturned.Player;
+using SDG.Unturned;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Rocket.Core.Plugins;
-using Rocket.Core.Commands;
-using SDG.Unturned;
-using Rocket.Unturned.Player;
 using UnityEngine;
-using Rocket.API;
-using Steamworks;
-using Rocket.Core;
 
 namespace DarkerClear
 {
@@ -114,10 +112,8 @@ namespace DarkerClear
             if (item)
             {
                 ItemManager.askClearAllItems();
-                foreach (var p in Provider.clients)
-                {
-                    ChatManager.serverSendMessage("Все предметы были удалены!", Color.green, null, p, EChatMode.LOCAL);
-                }
+                ChatManager.serverSendMessage("Все предметы удалены!", Color.green, null, null, EChatMode.GLOBAL);
+                Console.WriteLine("Все предметы удалены!");
             }
         }
 
@@ -131,7 +127,7 @@ namespace DarkerClear
 
 
 
-        [RocketCommand("clear", "")]
+        [RocketCommand("clear", "Команда для очистки карты")]
         public void Clear(IRocketPlayer caller, string[] command)
         {
             if(command.Length < 1)
@@ -151,13 +147,9 @@ namespace DarkerClear
 
 
 
-        [RocketCommand("createzone", "")]
+        [RocketCommand("createzone","Команда для создания свободной от очистки зоны.",AllowedCaller:AllowedCaller.Player)]
         public void CreateZone(IRocketPlayer caller, string[] command)
         {
-            if(caller is ConsolePlayer)
-            {
-                return;
-            }
             UnturnedPlayer player = (UnturnedPlayer)caller;
             if (command.Length != 1)
             {
@@ -169,7 +161,11 @@ namespace DarkerClear
                 ChatManager.serverSendMessage("/createzone Radius", Color.green, null, player.SteamPlayer(), EChatMode.LOCAL);
                 return;
             }
-            Configuration.Instance.Zones.Add(new Zone(player.Position, radius));
+            Configuration.Instance.Zones.Add(new Zone()
+            {
+                Position = player.Position,
+                Radius = radius
+            });
             Configuration.Save();
         }
 
@@ -181,13 +177,8 @@ namespace DarkerClear
             if(Time.realtimeSinceStartup > LastClear)
             {
                 LastClear = Time.realtimeSinceStartup + Configuration.Instance.CooldownClear;
-                ClearMap(true,true);
+                ClearMap(Configuration.Instance.AutoClearV, Configuration.Instance.AutoClearI);
             }
         }
-        protected override void Unload()
-        {
-            
-        }
-
     }
 }

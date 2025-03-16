@@ -6,11 +6,6 @@ namespace DarkerClear
     {
         public Vector3 Position;
         public int Radius;
-        public Zone(Vector3 pos, int rad)
-        {
-            Position = pos;
-            Radius = rad;
-        }
         public Zone() { }
     }
 }
