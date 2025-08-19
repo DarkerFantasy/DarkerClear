@@ -71,17 +71,7 @@ namespace DarkerClear
                 ChatManager.serverSendMessage("/dv (radius) для удаления машин.", Color.red, null, player.SteamPlayer(), EChatMode.LOCAL);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
+        
         public void ClearMap(bool vehicle,bool item)
         {
             LastClear = Time.realtimeSinceStartup + Configuration.Instance.CooldownClear;
@@ -106,16 +96,6 @@ namespace DarkerClear
             }
         }
 
-
-
-
-
-
-
-
-
-
-
         [RocketCommand("clear", "Команда для очистки карты")]
         public void Clear(IRocketPlayer caller, string[] command)
         {
@@ -132,9 +112,6 @@ namespace DarkerClear
                 ClearMap(false, true);
             }
         }
-
-
-
 
         [RocketCommand("createzone","Команда для создания свободной от очистки зоны.",AllowedCaller:AllowedCaller.Player)]
         public void CreateZone(IRocketPlayer caller, string[] command)
@@ -157,9 +134,6 @@ namespace DarkerClear
             });
             Configuration.Save();
         }
-
-
-
 
         public void FixedUpdate()
         {
